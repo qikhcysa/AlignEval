@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}AlignEval{% endblock %}</title>
+  <link rel="stylesheet" href="/static/vendor/bootstrap.min.css" />
+  <link rel="stylesheet" href="/static/vendor/bootstrap-icons.css" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+        <i class="bi bi-diagram-3-fill text-primary"></i>
+        <strong>AlignEval</strong>
+        <span class="badge bg-primary ms-1" style="font-size:.65rem;">Knowledge Defect Detector</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house me-1"></i>Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://github.com/qikhcysa/AlignEval" target="_blank"><i class="bi bi-github me-1"></i>GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-fluid py-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="text-center text-muted py-3 border-top" style="font-size:.85rem;">
+    AlignEval &mdash; Knowledge Alignment Evaluation &bull; Detection &rarr; Evaluation &rarr; Optimization
+  </footer>
+
+  <script src="/static/vendor/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/d3.min.js"></script>
+  <script src="/static/vendor/chart.umd.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

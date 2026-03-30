@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Evaluation – AlignEval{% endblock %}
+
+{% block content %}
+<div class="row g-3 mb-3">
+  <div class="col">
+    <a href="/" class="btn btn-sm btn-outline-secondary me-2">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+    <a href="/graph/{{ session_id }}" class="btn btn-sm btn-outline-primary">
+      <i class="bi bi-diagram-3 me-1"></i>View Graph
+    </a>
+  </div>
+</div>
+
+<div class="row g-4">
+  <!-- Metric cards -->
+  <div class="col-md-4">
+    <div class="card shadow-sm text-center border-0 metric-card-precision">
+      <div class="card-body py-4">
+        <div class="fs-1 fw-bold" id="precisionVal">—</div>
+        <div class="text-muted">Precision</div>
+        <div class="small mt-1 text-secondary">Correct / Total Learned</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm text-center border-0 metric-card-recall">
+      <div class="card-body py-4">
+        <div class="fs-1 fw-bold" id="recallVal">—</div>
+        <div class="text-muted">Recall</div>
+        <div class="small mt-1 text-secondary">Correct / Total Source</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm text-center border-0 metric-card-f1">
+      <div class="card-body py-4">
+        <div class="fs-1 fw-bold" id="f1Val">—</div>
+        <div class="text-muted">F1 Score</div>
+        <div class="small mt-1 text-secondary">Harmonic Mean</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts row -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold"><i class="bi bi-pie-chart-fill me-1 text-primary"></i>Knowledge Distribution</div>
+      <div class="card-body">
+        <canvas id="pieChart" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold"><i class="bi bi-bar-chart-fill me-1 text-success"></i>Triple Counts</div>
+      <div class="card-body">
+        <canvas id="barChart" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Missing triples -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold text-danger"><i class="bi bi-exclamation-triangle-fill me-1"></i>Missing Triples (Knowledge Gaps)</div>
+      <div class="card-body p-0">
+        <div class="table-responsive" style="max-height:320px;overflow-y:auto;">
+          <table class="table table-sm table-hover mb-0">
+            <thead class="table-light sticky-top">
+              <tr><th>Head</th><th>Relation</th><th>Tail</th></tr>
+            </thead>
+            <tbody id="missingTable"><tr><td colspan="3" class="text-center text-muted">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wrong triples -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold text-warning"><i class="bi bi-bug-fill me-1"></i>Wrong Triples (Incorrect Knowledge)</div>
+      <div class="card-body p-0">
+        <div class="table-responsive" style="max-height:320px;overflow-y:auto;">
+          <table class="table table-sm table-hover mb-0">
+            <thead class="table-light sticky-top">
+              <tr><th>Head</th><th>Relation</th><th>Tail</th></tr>
+            </thead>
+            <tbody id="wrongTable"><tr><td colspan="3" class="text-center text-muted">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optimization suggestions -->
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold"><i class="bi bi-lightbulb-fill me-1 text-warning"></i>Optimization Suggestions</div>
+      <div class="card-body" id="optimizationSuggestions">
+        <div class="text-muted">Loading metrics first…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Probe results table -->
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold"><i class="bi bi-chat-left-text me-1 text-info"></i>Probe Responses</div>
+      <div class="card-body p-0">
+        <div class="table-responsive" style="max-height:400px;overflow-y:auto;">
+          <table class="table table-sm table-hover mb-0">
+            <thead class="table-light sticky-top">
+              <tr><th>Level</th><th>Prompt</th><th>Response</th><th>Triples</th></tr>
+            </thead>
+            <tbody id="probeTable"><tr><td colspan="4" class="text-center text-muted">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const SESSION_ID = "{{ session_id }}";
+</script>
+<script src="/static/js/evaluation.js"></script>
+{% endblock %}
