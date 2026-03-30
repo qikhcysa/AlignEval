@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block title %}AlignEval – Knowledge Defect Detection{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <!-- Hero -->
+  <div class="col-12">
+    <div class="p-4 rounded-3 bg-dark text-white hero-banner">
+      <div class="d-flex align-items-center gap-3 mb-2">
+        <i class="bi bi-diagram-3-fill fs-1 text-primary"></i>
+        <div>
+          <h1 class="mb-0 fw-bold">AlignEval</h1>
+          <p class="mb-0 text-secondary">Knowledge Alignment Evaluation &bull; Detection → Evaluation → Optimization</p>
+        </div>
+      </div>
+      <p class="mt-3 mb-0" style="max-width:700px;">
+        Precisely detect, quantify, and visualize <strong>knowledge defects</strong> in fine-tuned
+        large language models. Build source &amp; learned knowledge graphs, align them, and identify
+        missing or incorrect knowledge.
+      </p>
+    </div>
+  </div>
+
+  <!-- Pipeline steps -->
+  <div class="col-12">
+    <div class="row g-3 text-center">
+      <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm step-card step-1">
+          <div class="card-body">
+            <div class="step-icon mb-2"><i class="bi bi-upload fs-2"></i></div>
+            <h6 class="fw-bold">1. Upload Dataset</h6>
+            <p class="small text-muted mb-0">Load domain Q&amp;A pairs. NER &amp; relation extraction build the <em>source knowledge graph</em>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm step-card step-2">
+          <div class="card-body">
+            <div class="step-icon mb-2"><i class="bi bi-cpu fs-2"></i></div>
+            <h6 class="fw-bold">2. Probe LLM</h6>
+            <p class="small text-muted mb-0">Multi-level prompts (factual, relational, reverse) probe your model to build the <em>learned knowledge graph</em>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm step-card step-3">
+          <div class="card-body">
+            <div class="step-icon mb-2"><i class="bi bi-bar-chart-line fs-2"></i></div>
+            <h6 class="fw-bold">3. Evaluate</h6>
+            <p class="small text-muted mb-0">Align source &amp; learned graphs. Compute <strong>Precision</strong>, <strong>Recall</strong>, <strong>F1</strong> and locate defects.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm step-card step-4">
+          <div class="card-body">
+            <div class="step-icon mb-2"><i class="bi bi-graph-up-arrow fs-2"></i></div>
+            <h6 class="fw-bold">4. Optimize</h6>
+            <p class="small text-muted mb-0">Get actionable data / model / reasoning optimization suggestions based on detected gaps.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Session form -->
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold"><i class="bi bi-plus-circle me-2 text-success"></i>New Evaluation Session</div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label">Session Name</label>
+          <input id="sessionName" class="form-control" placeholder="e.g. BioMedical GPT-4o Eval" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Domain</label>
+          <select id="sessionDomain" class="form-select">
+            <option value="biomedical">Biomedical</option>
+            <option value="legal">Legal</option>
+            <option value="finance">Finance</option>
+            <option value="AI">AI / Machine Learning</option>
+            <option value="general" selected>General</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">LLM Model Name</label>
+          <input id="modelName" class="form-control" value="gpt-4o-mini" />
+        </div>
+        <button class="btn btn-success w-100" onclick="createSession()">
+          <i class="bi bi-plus-lg me-1"></i>Create Session
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sessions list -->
+  <div class="col-lg-6">
+    <div class="card shadow-sm h-100">
+      <div class="card-header d-flex justify-content-between align-items-center fw-bold">
+        <span><i class="bi bi-collection me-2 text-primary"></i>Evaluation Sessions</span>
+        <button class="btn btn-sm btn-outline-secondary" onclick="loadSessions()">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+      </div>
+      <div class="card-body p-0" id="sessionsContainer">
+        <div class="text-center text-muted py-4">
+          <i class="bi bi-inbox fs-2 d-block mb-2"></i>No sessions yet. Create one to start.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Upload & Run (wizard) -->
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold"><i class="bi bi-lightning-fill me-2 text-warning"></i>Quick Demo Wizard</div>
+      <div class="card-body">
+        <div id="wizardAlert"></div>
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label">Select Session</label>
+            <select id="wizardSession" class="form-select">
+              <option value="">-- pick a session --</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Q&amp;A Dataset (JSON)</label>
+            <input id="wizardFile" type="file" class="form-control" accept=".json" />
+            <small class="text-muted">Or use the <a href="#" onclick="loadSampleDataset()">sample biomedical dataset</a></small>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Mock LLM</label>
+            <div class="form-check form-switch mt-1">
+              <input class="form-check-input" type="checkbox" id="mockMode" checked />
+              <label class="form-check-label" for="mockMode">Enabled</label>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary w-100" onclick="runWizard()">
+              <i class="bi bi-play-fill me-1"></i>Run Pipeline
+            </button>
+          </div>
+        </div>
+        <div class="mt-3" id="wizardProgress" style="display:none;">
+          <div class="progress mb-2" style="height:8px;">
+            <div id="wizardBar" class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%"></div>
+          </div>
+          <p id="wizardStatus" class="small text-muted"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/index.js"></script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{
+  "domain": "biomedical",
+  "description": "Sample biomedical Q&A dataset for AlignEval demo",
+  "data": [
+    {
+      "id": "1",
+      "question": "What is type 2 diabetes?",
+      "answer": "Type 2 diabetes is a chronic metabolic disease characterized by insulin resistance and relative insulin deficiency. The pancreas produces insulin, but cells do not respond effectively to insulin. This leads to high blood glucose levels. Treatment includes metformin, lifestyle changes, and sometimes insulin therapy.",
+      "domain": "biomedical"
+    },
+    {
+      "id": "2",
+      "question": "How does metformin treat type 2 diabetes?",
+      "answer": "Metformin is a first-line drug for type 2 diabetes. Metformin inhibits hepatic glucose production and improves insulin sensitivity. Metformin activates AMPK, which reduces gluconeogenesis in the liver. Metformin causes weight loss and reduces cardiovascular risk in diabetic patients.",
+      "domain": "biomedical"
+    },
+    {
+      "id": "3",
+      "question": "What causes hypertension?",
+      "answer": "Hypertension is caused by multiple factors including genetics, diet, obesity, stress, and kidney disease. High sodium intake causes water retention which increases blood pressure. Obesity is associated with hypertension through increased cardiac output. Chronic kidney disease leads to fluid retention and hypertension.",
+      "domain": "biomedical"
+    },
+    {
+      "id": "4",
+      "question": "What is the relationship between COVID-19 and the immune system?",
+      "answer": "COVID-19 is caused by SARS-CoV-2. SARS-CoV-2 infects cells via ACE2 receptor. The immune system produces antibodies against SARS-CoV-2. In severe cases, COVID-19 triggers a cytokine storm which causes inflammation. The immune system uses T cells and B cells to fight SARS-CoV-2 infection.",
+      "domain": "biomedical"
+    },
+    {
+      "id": "5",
+      "question": "How do neural networks work?",
+      "answer": "Neural networks are machine learning models inspired by the brain. A neural network contains layers of neurons. Each neuron computes a weighted sum of inputs and applies an activation function. Deep learning uses multiple hidden layers. Backpropagation trains neural networks by adjusting weights to minimize loss.",
+      "domain": "AI"
+    },
+    {
+      "id": "6",
+      "question": "What is the transformer architecture?",
+      "answer": "The transformer is a deep learning architecture based on self-attention mechanisms. The transformer uses an encoder-decoder structure. BERT is a transformer model pre-trained on masked language modeling. GPT is a transformer model that uses autoregressive language modeling. The transformer architecture uses multi-head attention to process sequences in parallel.",
+      "domain": "AI"
+    },
+    {
+      "id": "7",
+      "question": "What is aspirin used for?",
+      "answer": "Aspirin is a non-steroidal anti-inflammatory drug (NSAID). Aspirin inhibits COX-1 and COX-2 enzymes. Aspirin treats pain, fever, and inflammation. Low-dose aspirin prevents blood clots and reduces cardiovascular risk. Aspirin is associated with gastrointestinal bleeding as a side effect.",
+      "domain": "biomedical"
+    },
+    {
+      "id": "8",
+      "question": "What is machine learning?",
+      "answer": "Machine learning is a subset of artificial intelligence that enables computers to learn from data. Supervised learning uses labeled data to train models. Unsupervised learning discovers patterns in unlabeled data. Reinforcement learning trains agents through reward signals. Deep learning is a type of machine learning that uses neural networks.",
+      "domain": "AI"
+    },
+    {
+      "id": "9",
+      "question": "How does penicillin treat bacterial infections?",
+      "answer": "Penicillin is an antibiotic that treats bacterial infections. Penicillin inhibits bacterial cell wall synthesis by binding to penicillin-binding proteins. Bacteria cannot maintain their cell wall integrity without penicillin-binding proteins. This causes bacteria to lyse and die. Penicillin is effective against gram-positive bacteria.",
+      "domain": "biomedical"
+    },
+    {
+      "id": "10",
+      "question": "What is the role of insulin in the body?",
+      "answer": "Insulin is a hormone produced by the pancreas. Insulin regulates blood glucose levels. Insulin promotes glucose uptake in muscle and fat cells. The liver stores glucose as glycogen in response to insulin. Insulin inhibits gluconeogenesis in the liver. Insulin deficiency causes diabetes.",
+      "domain": "biomedical"
+    }
+  ]
+}

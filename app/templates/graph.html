@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Knowledge Graph – AlignEval{% endblock %}
+
+{% block content %}
+<div class="row g-3 mb-3">
+  <div class="col">
+    <a href="/" class="btn btn-sm btn-outline-secondary me-2">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+    <a href="/evaluation/{{ session_id }}" class="btn btn-sm btn-outline-primary">
+      <i class="bi bi-bar-chart me-1"></i>View Metrics
+    </a>
+  </div>
+</div>
+
+<div class="row g-3">
+  <!-- Controls -->
+  <div class="col-12">
+    <div class="card shadow-sm">
+      <div class="card-body py-2">
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+          <strong class="me-2">Graph View:</strong>
+          <div class="btn-group btn-group-sm" role="group">
+            <button class="btn btn-outline-primary active" onclick="switchGraph('source', this)">Source KG</button>
+            <button class="btn btn-outline-success" onclick="switchGraph('learned', this)">Learned KG</button>
+            <button class="btn btn-outline-warning" onclick="switchGraph('aligned', this)">Aligned View</button>
+          </div>
+          <span class="ms-3">
+            <strong>Filter:</strong>
+          </span>
+          <div class="btn-group btn-group-sm" role="group">
+            <button class="btn btn-outline-secondary active" onclick="filterStatus('all', this)">All</button>
+            <button class="btn btn-outline-success" onclick="filterStatus('matched', this)">Matched</button>
+            <button class="btn btn-outline-danger" onclick="filterStatus('missing', this)">Missing</button>
+            <button class="btn btn-outline-warning" onclick="filterStatus('wrong', this)">Wrong</button>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary ms-auto" onclick="resetZoom()">
+            <i class="bi bi-aspect-ratio"></i> Reset Zoom
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graph canvas -->
+  <div class="col-lg-9">
+    <div class="card shadow-sm">
+      <div class="card-body p-0">
+        <div id="graph-container" style="height:600px; position:relative;">
+          <div id="graph-loading" class="d-flex align-items-center justify-content-center h-100">
+            <div class="spinner-border text-primary" role="status"></div>
+            <span class="ms-3">Loading graph…</span>
+          </div>
+          <svg id="graph-svg" width="100%" height="100%" style="display:none;"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend + stats sidebar -->
+  <div class="col-lg-3">
+    <div class="card shadow-sm mb-3">
+      <div class="card-header fw-bold"><i class="bi bi-info-circle me-1"></i>Legend</div>
+      <div class="card-body">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="legend-dot" style="background:#4dabf7;"></span>
+          <small>Source triple (should know)</small>
+        </div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="legend-dot" style="background:#69db7c;"></span>
+          <small>Matched (correctly learned)</small>
+        </div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="legend-dot" style="background:#ff6b6b;"></span>
+          <small>Missing (knowledge gap)</small>
+        </div>
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="legend-dot" style="background:#ffd43b;"></span>
+          <small>Wrong (incorrect knowledge)</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-3">
+      <div class="card-header fw-bold"><i class="bi bi-bar-chart-fill me-1"></i>Graph Stats</div>
+      <div class="card-body" id="graphStats">
+        <div class="text-muted small">Loading…</div>
+      </div>
+    </div>
+
+    <!-- Tooltip / selected node info -->
+    <div class="card shadow-sm">
+      <div class="card-header fw-bold"><i class="bi bi-cursor me-1"></i>Selected Node</div>
+      <div class="card-body" id="nodeInfo">
+        <div class="text-muted small">Click a node to see details.</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const SESSION_ID = "{{ session_id }}";
+</script>
+<script src="/static/js/graph.js"></script>
+{% endblock %}
